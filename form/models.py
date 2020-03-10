@@ -5,6 +5,8 @@ import logging
 
 STARTUP_SIGNUP_TABLE = os.environ['STARTUP_SIGNUP_TABLE']
 AWS_REGION = os.environ['AWS_REGION']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +15,7 @@ class Leads(models.Model):
 
     def insert_lead(self, name, email, previewAccess):
         try:
-            dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
+            dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION, aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY )
             table = dynamodb.Table(STARTUP_SIGNUP_TABLE)
         except Exception as e:
             logger.error(
